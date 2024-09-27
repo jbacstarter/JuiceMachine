@@ -1,0 +1,2 @@
+module FruitJuiceMachine {
+}
