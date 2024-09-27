@@ -1,36 +1,52 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class JuiceWindow extends JFrame {
 	// METHODS FIRST
-	public JuiceWindow(JuiceMachine jm) {
+	public JuiceWindow(JuiceMachine jm) throws IOException{
 		this.jm = jm;
+		img = ImageIO.read(new File("./src/pic2.jpg"));
+		showSelection();
+	}
+	
+	private void showSelection() {
 		this.initGUI();
 		this.initSelectPanel();
 		this.initDetailsPanel();
 		this.buttonListeners();
+		repaint();
 		this.setVisible(true);
 	}
 	
+
 	private void initGUI() {
 		this.setSize(600, 420);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setTitle("Fruit Juice Machine");
-		//this.getContentPane().setBackground(Color.darkGray);
+		this.setContentPane(new JPanel() {
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(img, 0,0,600, 420, this);
+			}
+		});
 		this.getContentPane().setLayout(null);
-		
 	}
 	
 	private void initSelectPanel() {
 		selectionPanel.setLayout(new GridLayout(4,1, 0, 20));
-		
+		selectionPanel.setBackground(new Color(255,255,255, Color.TRANSLUCENT));
 		selectionPanel.setBounds(50,35,200, 200);
 		this.add(selectionPanel);
 		
@@ -54,13 +70,13 @@ public class JuiceWindow extends JFrame {
 	// Name of product, Cost, Availability
 	private void initDetailsPanel() {
 		detailsPanel.setLayout(new GridLayout(3,1, 0, 25));
-		detailsPanel.setBackground(Color.gray);
+		detailsPanel.setBackground(new Color(255,255,255, Color.TRANSLUCENT));
 		detailsPanel.setBounds(380,10,205, 150);
 		
 		this.add(detailsPanel);
 		
 		pName.setText("Juice: ");
-		//pName.setBackground(Color.lightGray);
+		//pName.setBackground(new Color(255,255,255, Color.TRANSLUCENT));
 		pName.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
 		
 		cost.setText("Cost: ");
@@ -146,6 +162,7 @@ public class JuiceWindow extends JFrame {
 	cost = new JTextArea(),
 	avail = new JTextArea();
 	
+	private Image img;
 	// PANELS
 	private JPanel detailsPanel = new JPanel();
 	private JPanel selectionPanel = new JPanel();

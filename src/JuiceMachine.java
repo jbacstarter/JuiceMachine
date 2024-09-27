@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
 /* Juices:
@@ -20,7 +22,12 @@ public class JuiceMachine{
 private JuiceMachine() {};
 public static void initJuiceMachine() {
 	juiceMachine = new JuiceMachine();
-	new JuiceWindow(juiceMachine);
+	try {
+		new JuiceWindow(juiceMachine);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 }
 public  DispenserType getApple() {
 	return apple;
