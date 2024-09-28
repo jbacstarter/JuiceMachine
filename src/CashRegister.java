@@ -7,7 +7,7 @@ public class CashRegister {
 	};
 	
 	public CashRegister(int cashIn) {
-		CashRegister.cashOnHand = cashIn;
+		CashRegister.cashOnHand += cashIn;
 	};
 	public void acceptAmount(int amountIn) {
 		// For debugging/error checking purposes

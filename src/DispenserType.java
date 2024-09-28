@@ -1,13 +1,15 @@
 
 public class DispenserType {
 	
-	public DispenserType() {
+	public DispenserType(String name) {
 		this.cost = 50;
 		this.numberOfItems = 50;
 		this.soldOut = false;
+		this.name = name;
 	}
-	public DispenserType(int num,int cost) {
+	public DispenserType(int num,int cost, String name) {
 		this.numberOfItems = num;
+		this.name = name;
 		this.cost = cost;
 		if(this.numberOfItems <= 0)this.soldOut = true;
 		else this.soldOut = false;
@@ -40,9 +42,12 @@ public class DispenserType {
 		return res;
 		
 	}
-
+	public String getName() {
+		return name;
+	}
 	private int numberOfItems = 0;
 	private int cost = 0;
 	private boolean soldOut = true;
-	
+	private String name = "";
+
 }

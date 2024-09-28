@@ -41,7 +41,13 @@ public  DispenserType getMango() {
 public  DispenserType getFruit() {
 	return fruit;
 }
-private  static JuiceMachine juiceMachine = null;
-private  DispenserType apple = new DispenserType(), orange = new DispenserType(), mango = new DispenserType(), fruit = new DispenserType();
+	private  static JuiceMachine juiceMachine = null;
+	private  CashRegister 
+	register = new CashRegister();
+	private  DispenserType 
+	apple = new DispenserType(10, 35, "Apple Juice"), 
+	orange = new DispenserType(30, 25, "Orange Juice"), 
+	mango = new DispenserType(15, 60, "Mango lassi"), 
+	fruit = new DispenserType(0, 10, "Fruit punch");
 
 }
