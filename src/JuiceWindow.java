@@ -99,12 +99,28 @@ public class JuiceWindow extends JFrame {
 		buyButton.setEnabled(false);
 		buyButton.setBounds(470, 190, 100, 50);
 		
-		buyButton.addActionListener(new ActionListener() {
-			private JOptionPane pane = new JOptionPane();
-			private String str = "";
 
+		buyButton.addActionListener(new ActionListener() {
+		
+			private String str = "";
+			private JOptionPane pPane = new JOptionPane();
+			private JPanel pane = new JPanel();
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(pane, "test","Checkout",JOptionPane.PLAIN_MESSAGE);
+				if(dispType == null) {
+					JOptionPane.showMessageDialog(null, "No dispenser available!","Error",JOptionPane.ERROR_MESSAGE);
+					System.exit(0);
+				}
+				// Add next the payment/checkout GUI/UI Before the receipt
+				//**********************
+				
+				// Official Receipt JOptionPane
+				str = "Official Receipt.\n   Order:\n        " 
+				+ dispType.getName() 
+				+ "     1x"
+				+ "\n                                                      Cost: " 
+				+ dispType.getCost()
+				+ " cents";
+				JOptionPane.showMessageDialog(pPane, str,"Checkout",JOptionPane.PLAIN_MESSAGE);
 				
 			}
 		});
@@ -117,6 +133,7 @@ public class JuiceWindow extends JFrame {
 			apple.addActionListener(new ActionListener() {
 				DispenserType a = jm.getApple();
 				public void actionPerformed(ActionEvent e) {
+					dispType = a;
 					pName.setText("Juice: " + "Apple");
 					cost.setText("Cost: " + a.getCost());
 					boolean res = a.isSoldOut();
@@ -130,11 +147,13 @@ public class JuiceWindow extends JFrame {
 					}else {
 						buyButton.setEnabled(true);
 					}
+					
 				}
 			});
 			orange.addActionListener(new ActionListener() {
 				DispenserType a = jm.getOrange();
 				public void actionPerformed(ActionEvent e) {
+					dispType = a;
 					pName.setText("Juice: " + "Orange");
 					cost.setText("Cost: " + a.getCost());
 					boolean res = a.isSoldOut();
@@ -153,6 +172,7 @@ public class JuiceWindow extends JFrame {
 			mango.addActionListener(new ActionListener() {
 				DispenserType a = jm.getMango();
 				public void actionPerformed(ActionEvent e) {
+					dispType = a;
 					pName.setText("Juice: " + "Mango lassi");
 					cost.setText("Cost: " + a.getCost());
 					boolean res = a.isSoldOut();
@@ -171,6 +191,7 @@ public class JuiceWindow extends JFrame {
 			fruit.addActionListener(new ActionListener() {
 				DispenserType a = jm.getFruit();
 				public void actionPerformed(ActionEvent e) {
+					dispType = a;
 					pName.setText("Juice: " + "Fruit punch");
 					cost.setText("Cost: " + a.getCost());
 					boolean res = a.isSoldOut();
@@ -196,7 +217,7 @@ public class JuiceWindow extends JFrame {
 	
 	// Status checkers
 	private boolean availStatus = true;
-	
+	private DispenserType dispType = null;
 	// BUTTONS
 	private JButton 
 	buyButton = new JButton("BUY"),
