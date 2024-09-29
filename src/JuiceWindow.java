@@ -17,6 +17,8 @@ public class JuiceWindow extends JFrame {
 	// METHODS FIRST
 	public JuiceWindow(JuiceMachine jm) throws IOException{
 		this.jm = jm;
+		DispenserType[] arr = {jm.getApple(), jm.getOrange(), jm.getMango(), jm.getFruit()};
+		this.dArr = arr;
 		img = ImageIO.read(new File("./src/pic.jpg"));
 		showSelection();
 		boolean t = true;
@@ -26,6 +28,7 @@ public class JuiceWindow extends JFrame {
 			if(c*6e-5 >= 60) {
 			
 				try {
+					System.out.println("FPS: " + c*6e-5);
 					Thread.sleep(10000);
 					img = ImageIO.read(new File("./src/pic2.jpg"));
 					this.getContentPane().repaint();
@@ -37,7 +40,6 @@ public class JuiceWindow extends JFrame {
 					e.printStackTrace();
 				}
 				
-				System.out.println("FPS: " + c*6e-5);
 				c = 1;
 			}		
 			c+=1;
@@ -222,7 +224,7 @@ public class JuiceWindow extends JFrame {
 		
 		private void buttonListeners() {
 			// Apple button press listener
-			apple.addActionListener(new ActionListener() {
+			/*apple.addActionListener(new ActionListener() {
 				DispenserType a = jm.getApple();
 				public void actionPerformed(ActionEvent e) {
 					dispType = a;
@@ -301,9 +303,32 @@ public class JuiceWindow extends JFrame {
 					}
 					
 				}
-			});
+			});*/
+			 int i = 0;
+			for(;i < 4;i++) {
+				JButton d = jArr[i];
+				DispenserType dis= dArr[i];
+				d.addActionListener(new JuiceButtonListener(this, dis));
+			}
 		}
 		
+		
+	public void helperFunc(DispenserType dis) {
+		dispType = dis;
+		pName.setText("Juice: " + dis.getName());
+		cost.setText("Cost: " + dis.getCost());
+		boolean res = dis.isSoldOut();
+		if(res == true) avail.setForeground(Color.red);
+		else avail.setForeground(Color.green);
+		String str = res == true ? "Sold Out!" : "Available!!!";
+		availStatus = res == true ? true : false;
+		avail.setText(str);
+		if(availStatus == true) {
+			buyButton.setEnabled(false);
+		}else {
+			buyButton.setEnabled(true);
+		}
+	}
 
 	// ALL VARIABLES BELOW
 		
@@ -313,6 +338,8 @@ public class JuiceWindow extends JFrame {
 	// Status checkers
 	private boolean availStatus = true;
 	private DispenserType dispType = null;
+	
+	private  DispenserType[] dArr;
 	// BUTTONS
 	private JButton 
 	buyButton = new JButton("BUY"),
@@ -321,6 +348,7 @@ public class JuiceWindow extends JFrame {
 	mango = new JButton("MANGO"),
 	fruit = new JButton("FRUIT");
 	
+	private JButton[] jArr= {apple, orange, mango, fruit};
 	// TEXT AREA
 	private JTextArea
 	pName = new JTextArea(),
