@@ -19,7 +19,7 @@ public class JuiceWindow extends JFrame {
 		img = ImageIO.read(new File("./src/pic.jpg"));
 		showSelection();
 		boolean t = true;
-		float c = 1,j = 1;
+		long c = 1;
 		while(t) {
 			
 			if(c*6e-5 >= 60) {
@@ -222,7 +222,7 @@ public class JuiceWindow extends JFrame {
 					}else {
 						buyButton.setEnabled(true);
 					}
-					
+					apple.repaint();
 				}
 			});
 			orange.addActionListener(new ActionListener() {
@@ -242,6 +242,7 @@ public class JuiceWindow extends JFrame {
 					}else {
 						buyButton.setEnabled(true);
 					}
+					orange.repaint();
 				}
 			});
 			mango.addActionListener(new ActionListener() {
@@ -261,6 +262,7 @@ public class JuiceWindow extends JFrame {
 					}else {
 						buyButton.setEnabled(true);
 					}
+					mango.repaint();
 				}
 			});
 			fruit.addActionListener(new ActionListener() {
@@ -280,6 +282,7 @@ public class JuiceWindow extends JFrame {
 					}else {
 						buyButton.setEnabled(true);
 					}
+					fruit.repaint();
 				}
 			});
 		}
