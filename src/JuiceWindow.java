@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 public class JuiceWindow extends JFrame {
 	// METHODS FIRST
@@ -23,16 +24,19 @@ public class JuiceWindow extends JFrame {
 		while(t) {
 			
 			if(c*6e-5 >= 60) {
-				img = ImageIO.read(new File("./src/pic2.jpg"));
-				this.getContentPane().repaint();
+			
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(10000);
+					img = ImageIO.read(new File("./src/pic2.jpg"));
+					this.getContentPane().repaint();
+					Thread.sleep(10000);
+					img = ImageIO.read(new File("./src/pic.jpg"));
+					this.getContentPane().repaint();
 				} catch (InterruptedException e) {
 					
 					e.printStackTrace();
 				}
-				img = ImageIO.read(new File("./src/pic.jpg"));
-				this.getContentPane().repaint();
+				
 				System.out.println("FPS: " + c*6e-5);
 				c = 1;
 			}		
@@ -102,6 +106,14 @@ public class JuiceWindow extends JFrame {
 		
 		pName.setText("Juice: ");
 		cost.setText("Cost: ");
+		cost.setLineWrap(true);
+		pName.setBorder(new LineBorder(Color.black, 3, true));
+		cost.setBorder(new LineBorder(Color.black, 3, true));
+		avail.setBorder(new LineBorder(Color.black, 3, true));
+		
+		pName.setFocusable(false);
+		cost.setFocusable(false);
+		avail.setFocusable(false);
 		
 		pName.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 20));
 		cost.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 25));
@@ -155,7 +167,7 @@ public class JuiceWindow extends JFrame {
 				while(inpStatus == false) {
 					String str = inpStatus == false && c >0? "Enter amount:\nInsufficient amount." : "Enter amount: ";
 					
-					String inp = JOptionPane.showInputDialog(null, str, "Payment", JOptionPane.INFORMATION_MESSAGE);
+					String inp = JOptionPane.showInputDialog(null, str, "Checkout: ", JOptionPane.INFORMATION_MESSAGE);
 					if(inp == null)break;
 					try {
 						money = Integer.parseInt(inp);
@@ -184,11 +196,16 @@ public class JuiceWindow extends JFrame {
 				+ "\n                                                      Change: " 
 				+ (money-dispType.getCost())
 				+" cents" : "Continue? ";
-				JOptionPane.showMessageDialog(pPane, str,"Checkout",JOptionPane.INFORMATION_MESSAGE);
+				
+				JOptionPane.showMessageDialog(pPane, str,"Receipt: ",JOptionPane.INFORMATION_MESSAGE);
 				if(inpStatus == true) {
 					jm.register.acceptAmount(dispType.getCost());
 					dispType.makeSale();
 					inpStatus = false;
+					pName.setText("Juice: ");
+					cost.setText("Cost: ");
+					avail.setText("");
+					buyButton.setEnabled(false);
 				}
 					
 				
@@ -222,7 +239,7 @@ public class JuiceWindow extends JFrame {
 					}else {
 						buyButton.setEnabled(true);
 					}
-					apple.repaint();
+					
 				}
 			});
 			orange.addActionListener(new ActionListener() {
@@ -242,7 +259,7 @@ public class JuiceWindow extends JFrame {
 					}else {
 						buyButton.setEnabled(true);
 					}
-					orange.repaint();
+					
 				}
 			});
 			mango.addActionListener(new ActionListener() {
@@ -262,7 +279,7 @@ public class JuiceWindow extends JFrame {
 					}else {
 						buyButton.setEnabled(true);
 					}
-					mango.repaint();
+					
 				}
 			});
 			fruit.addActionListener(new ActionListener() {
@@ -282,7 +299,7 @@ public class JuiceWindow extends JFrame {
 					}else {
 						buyButton.setEnabled(true);
 					}
-					fruit.repaint();
+					
 				}
 			});
 		}
