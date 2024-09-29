@@ -1,3 +1,5 @@
+
+
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -25,7 +27,6 @@ public static void initJuiceMachine() {
 	try {
 		new JuiceWindow(juiceMachine);
 	} catch (IOException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 }

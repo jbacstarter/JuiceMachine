@@ -18,6 +18,26 @@ public class JuiceWindow extends JFrame {
 		this.jm = jm;
 		img = ImageIO.read(new File("./src/pic.jpg"));
 		showSelection();
+		boolean t = true;
+		float c = 1,j = 1;
+		while(t) {
+			
+			if(c*6e-5 >= 60) {
+				img = ImageIO.read(new File("./src/pic2.jpg"));
+				this.getContentPane().repaint();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					
+					e.printStackTrace();
+				}
+				img = ImageIO.read(new File("./src/pic.jpg"));
+				this.getContentPane().repaint();
+				System.out.println("FPS: " + c*6e-5);
+				c = 1;
+			}		
+			c+=1;
+		};
 	}
 	
 	private void showSelection() {
@@ -44,6 +64,7 @@ public class JuiceWindow extends JFrame {
 				g.drawImage(img, 0,0,600, 420, this);
 			}
 		});
+
 		this.getContentPane().setLayout(null);
 		
 	}
