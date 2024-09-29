@@ -42,7 +42,7 @@ public  DispenserType getFruit() {
 	return fruit;
 }
 	private  static JuiceMachine juiceMachine = null;
-	private  CashRegister 
+	public  CashRegister 
 	register = new CashRegister();
 	private  DispenserType 
 	apple = new DispenserType(10, 35, "Apple Juice"), 

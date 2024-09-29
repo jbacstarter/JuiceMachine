@@ -28,6 +28,7 @@ public class JuiceWindow extends JFrame {
 		buyButton();
 		repaint();
 		this.setVisible(true);
+		
 	}
 	
 
@@ -44,6 +45,7 @@ public class JuiceWindow extends JFrame {
 			}
 		});
 		this.getContentPane().setLayout(null);
+		
 	}
 	
 	private void initSelectPanel() {
@@ -105,25 +107,77 @@ public class JuiceWindow extends JFrame {
 			private String str = "";
 			private JOptionPane pPane = new JOptionPane();
 			private JPanel pane = new JPanel();
+			private boolean inpStatus = false;
+			
+			
+			private boolean moneyChecker(int money) {
+				boolean res;
+			
+				if(money >= dispType.getCost()) {
+					res = true;
+				}else {
+					res= false;
+				}
+				return res;
+			}
+			
+			// Button click listener
 			public void actionPerformed(ActionEvent e) {
+				// If user did not select anything
 				if(dispType == null) {
 					JOptionPane.showMessageDialog(null, "No dispenser available!","Error",JOptionPane.ERROR_MESSAGE);
 					System.exit(0);
 				}
-				// Add next the payment/checkout GUI/UI Before the receipt
-				//**********************
+				// Start of payment gui loop
+				int money = 0;
+				int c = 0;
+				while(inpStatus == false) {
+					String str = inpStatus == false && c >0? "Enter amount:\nInsufficient amount." : "Enter amount: ";
+					
+					String inp = JOptionPane.showInputDialog(null, str, "Payment", JOptionPane.INFORMATION_MESSAGE);
+					if(inp == null)break;
+					try {
+						money = Integer.parseInt(inp);
+						inpStatus = moneyChecker(money);
+					} catch (NumberFormatException e2) {
+						JOptionPane.showMessageDialog(null, "Invalid Input","Error", JOptionPane.ERROR_MESSAGE);
+						
+					}
+					
+					c++;
+				}
+				c = 0;
+				//End of Loop
 				
 				// Official Receipt JOptionPane
-				str = "Official Receipt.\n   Order:\n        " 
+				
+				str = inpStatus == true ?"Official Receipt.\n   Order:\n        " 
 				+ dispType.getName() 
 				+ "     1x"
 				+ "\n                                                      Cost: " 
 				+ dispType.getCost()
-				+ " cents";
-				JOptionPane.showMessageDialog(pPane, str,"Checkout",JOptionPane.PLAIN_MESSAGE);
+				+ " cents"
+				+ "\n                                                      Amount paid: " 
+				+ money
+				+" cents"
+				+ "\n                                                      Change: " 
+				+ (money-dispType.getCost())
+				+" cents" : "Continue? ";
+				JOptionPane.showMessageDialog(pPane, str,"Checkout",JOptionPane.INFORMATION_MESSAGE);
+				if(inpStatus == true) {
+					jm.register.acceptAmount(dispType.getCost());
+					dispType.makeSale();
+					inpStatus = false;
+				}
+					
+				
+				
+				String msg = "" + jm.register.getCurrentBalance();
+				System.out.println(msg);
 				
 			}
 		});
+		
 		this.add(buyButton);
 	}
 		
